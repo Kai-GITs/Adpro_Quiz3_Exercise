@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package quizprep;
+
+service QuizService {
+  rpc SubmitPayment (PaymentRequest) returns (PaymentReply);
+  rpc WatchTransactions (TransactionQuery) returns (stream TransactionEvent);
+  rpc Chat (stream ChatMessage) returns (stream ChatMessage);
+}
+
+message PaymentRequest {
+  string payment_id = 1;
+  string user_id = 2;
+  uint32 amount = 3;
+}
+
+message PaymentReply {
+  string payment_id = 1;
+  bool accepted = 2;
+  string message = 3;
+}
+
+message TransactionQuery {
+  string user_id = 1;
+  uint32 limit = 2;
+}
+
+message TransactionEvent {
+  string transaction_id = 1;
+  string user_id = 2;
+  uint32 amount = 3;
+  string status = 4;
+}
+
+message ChatMessage {
+  string sender = 1;
+  string body = 2;
+}
